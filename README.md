@@ -1,8 +1,6 @@
 # Himekaminize
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/himekaminize`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Utilities to extract markdown some parts.
 
 ## Installation
 
@@ -14,15 +12,20 @@ gem 'himekaminize'
 
 And then execute:
 
-    $ bundle
+```sh
+$ bundle
+```
+
+```ruby
+gem 'himekaminize'
+```
+
 
 Or install it yourself as:
 
     $ gem install himekaminize
 
 ## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
