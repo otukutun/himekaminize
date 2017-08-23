@@ -1,5 +1,14 @@
 module Himekaminize
   class TaskList
+    class << self
+       # @return [Array<Himekaminize::Filters::BaseFilter>]
+       def filters
+         @filters ||= [
+           ::Himekaminize::Filters::TaskFilter.new
+         ]
+       end
+    end
+
     # @param markdown [String]
     def initialize(markdown)
       @markdown = markdown
@@ -7,9 +16,11 @@ module Himekaminize
     end
 
     # @todo
-    # @param markdown [String]
+    # @param markdown [Array]
     def to_a
-      @lines
+      self.class.filters.inject(@lines) do |result, filter|
+        filter.call(result)
+      end
     end
 
     private
