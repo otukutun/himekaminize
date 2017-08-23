@@ -6,7 +6,9 @@ module Himekaminize
     end
 
     # @todo
+    # @param markdown [String]
     def to_a
+      []
     end
   end
 end
