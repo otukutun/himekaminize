@@ -16,16 +16,17 @@ And then execute:
 $ bundle
 ```
 
-```ruby
-gem 'himekaminize'
-```
-
-
 Or install it yourself as:
 
-    $ gem install himekaminize
+```sh
+$ gem install himekaminize
+```
 
 ## Usage
+
+```
+Himekaminize::TaskList.new("- [ ] TODO\n  - [ ] ねる\n  - [ ] おきる").to_a
+```
 
 ## Development
 
