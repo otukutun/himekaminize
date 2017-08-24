@@ -1,4 +1,4 @@
-# Himekaminize [![Build Status](https://travis-ci.org/otukutun/himekaminize.svg?branch=master)](https://travis-ci.org/otukutun/himekaminize)
+# Himekaminize [![Build Status](https://travis-ci.org/otukutun/himekaminize.svg?branch=master)](https://travis-ci.org/otukutun/himekaminize) [![Gem Version](https://badge.fury.io/rb/himekaminize.svg)](https://badge.fury.io/rb/himekaminize)
 
 Utilities to extract markdown some parts.
 
