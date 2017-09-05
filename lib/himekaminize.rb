@@ -1,3 +1,4 @@
+require "himekaminize/filterable"
 require "himekaminize/task"
 require "himekaminize/filters/base_filter"
 require "himekaminize/filters/task_filter"
