@@ -5,11 +5,16 @@ module Himekaminize
       # @param array [Array]
       # @return [Array]
       def call(array)
-        array
-          .select { |line| line.is_a?(String) && line =~ /\A\s*(#{Himekaminize::Task::INCOMPLETE_PATTERN}|#{Himekaminize::Task::COMPLETE_PATTERN})/ }
-          .map.with_index {|n, idx| Himekaminize::Task.new(n, idx + 1)}
+        seq = 0
+        array.map do |line|
+          if line.is_a?(String) && line =~ /\A\s*(#{Himekaminize::Task::INCOMPLETE_PATTERN}|#{Himekaminize::Task::COMPLETE_PATTERN})/
+            seq += 1
+            Himekaminize::Task.new(line, seq)
+          else
+            line
+          end
+        end
       end
-
     end
   end
 end
