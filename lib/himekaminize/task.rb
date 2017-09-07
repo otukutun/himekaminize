@@ -7,6 +7,7 @@ module Himekaminize
 
     COMPLETE_STATUSE = :complete
     INCOMPLETE_STATUSE = :incomplete
+    STATUSES = %I(#{COMPLETE_STATUSE} #{INCOMPLETE_STATUSE})
 
     def initialize(line, sequence)
       @sequence = sequence

@@ -7,12 +7,18 @@ module Himekaminize
     def initialize(markdown)
       @markdown = markdown
       to_lines
+      @result ||= Hash.new
     end
 
-    def to_a
-      filters.inject(lines) do |result, filter|
-        filter.call(result)
-      end
+    def call
+      result[:output] =
+        filters.inject(lines) do |output, filter|
+          filter.call(output)
+        end
+    end
+
+    def result
+      @result
     end
 
     private

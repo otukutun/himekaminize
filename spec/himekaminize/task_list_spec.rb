@@ -3,9 +3,9 @@ RSpec.describe Himekaminize::TaskList do
     described_class.new(markdown)
   end
 
-  describe "#to_a" do
+  describe "#call" do
     subject do
-      task_list.to_a
+      task_list.call
     end
 
     context "empty array" do
