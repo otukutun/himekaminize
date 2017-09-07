@@ -24,8 +24,10 @@ $ gem install himekaminize
 
 ## Usage
 
-```
-Himekaminize::TaskList.new("- [ ] TODO\n  - [ ] ねる\n  - [ ] おきる").to_a
+```ruby
+task_list = Himekaminize::TaskList.new("- [ ] TODO\n  - [ ] ねる\n  - [ ] おきる").call
+
+task_list.update_task_status(1, :complete)
 ```
 
 ## Development
