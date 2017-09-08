@@ -21,6 +21,7 @@ module Himekaminize
       result[:task_list] = result.try(:task_list) || to_task_list
       if sequence.is_a?(Integer) && sequence > 0 && (1..result[:task_list].count).cover?(sequence)
         result[:task_list][sequence - 1].status = status
+        to_task_list
       else
         false
       end
@@ -29,10 +30,9 @@ module Himekaminize
 
     def to_s
       array = result.try(:output) || call
-      seq = 0
       array.map do |line|
         if line.is_a?(::Himekaminize::Task)
-          line.to_s + "\n\r"
+          line.to_s
         else
           line
         end
