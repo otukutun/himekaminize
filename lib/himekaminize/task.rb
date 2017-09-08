@@ -21,6 +21,11 @@ module Himekaminize
       sprintf("%s%s %s", @space, status_str, @name)
     end
 
+    def update_status(status)
+      return false unless STATUSES.include?(status)
+      @status = status
+    end
+
     private
     def split_name_and_status(line)
       /\A(\s)*(#{INCOMPLETE_PATTERN}|#{COMPLETE_PATTERN})(.*)/.match(line) do |m|
