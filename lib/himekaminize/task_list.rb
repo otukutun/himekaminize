@@ -32,12 +32,12 @@ module Himekaminize
       seq = 0
       array.map do |line|
         if line.is_a?(::Himekaminize::Task)
-          line.to_s
+          line.to_s + "\n\r"
         else
           line
         end
       end
-      .join("\n\r")
+      .join('')
     end
   end
 end
