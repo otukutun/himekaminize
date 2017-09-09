@@ -1,20 +1,23 @@
 require "active_support/concern"
-
 module Himekaminize
   module Filterable
     extend ::ActiveSupport::Concern
 
-    def initialize(markdown)
+    def initialize(default_context = {})
+      @default_context = default_context
+    end
+
+    def call(markdown, context = {})
       @markdown = markdown
       to_lines
       @result ||= Hash.new
-    end
+      context = default_context.merge(context)
 
-    def call
-      result[:output] =
-        filters.inject(lines) do |output, filter|
-          filter.call(output)
-        end
+      result = filters.inject(context: context, output: lines) do |output, filter|
+        filter.call(output)
+      end
+
+      result
     end
 
     def result
@@ -29,6 +32,14 @@ module Himekaminize
 
     def markdown
       @markdown
+    end
+
+    def context
+      @context
+    end
+
+    def default_context
+      @default_context
     end
 
     def lines

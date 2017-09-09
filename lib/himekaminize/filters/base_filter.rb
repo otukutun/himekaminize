@@ -1,9 +1,10 @@
 module Himekaminize
   module Filters
     class BaseFilter
-      # @param array [Array]
-      # @return [Array]
-      def call(array)
+      # @param context [Hash]
+      # @param output [String]
+      # @return [Hash]
+      def call(context:, output:)
         raise ::NotImplementedError
       end
     end
