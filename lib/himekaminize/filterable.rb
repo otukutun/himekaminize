@@ -52,12 +52,11 @@ module Himekaminize
     end
 
     def to_s
-      seq = 0
       @result[:markdown] = @result[:output].map { |line|
         if line.is_a?(String)
           line
         else
-          line.to_s + "\n\r"
+          line.to_s
         end
       }.join('')
     end
