@@ -28,7 +28,7 @@ module Himekaminize
 
     private
     def split_name_and_status(line)
-      /\A(\s)*(#{INCOMPLETE_PATTERN}|#{COMPLETE_PATTERN})(.*)/.match(line) do |m|
+      /\A(\s*)(#{INCOMPLETE_PATTERN}|#{COMPLETE_PATTERN})(.*)/.match(line) do |m|
         if m[2] =~ /#{INCOMPLETE_PATTERN}/
           return [INCOMPLETE_STATUSE, m[3], m[1]]
         else

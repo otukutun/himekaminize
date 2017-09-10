@@ -17,6 +17,7 @@ module Himekaminize
         filter.call(output)
       end
 
+      to_s
       @result
     end
 
@@ -48,6 +49,17 @@ module Himekaminize
 
     def to_lines
       @lines = markdown.lines
+    end
+
+    def to_s
+      seq = 0
+      @result[:markdown] = @result[:output].map { |line|
+        if line.is_a?(String)
+          line
+        else
+          line.to_s + "\n\r"
+        end
+      }.join('')
     end
 
     module ClassMethods

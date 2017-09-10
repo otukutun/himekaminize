@@ -14,7 +14,7 @@ RSpec.describe Himekaminize::TaskList do
       let(:markdown) { "" }
       let(:context) { {} }
 
-      it { is_expected.to eq context: {}, output: [] }
+      it { is_expected.to eq context: {}, output: [], markdown: "" }
     end
 
     context "simple text" do
@@ -53,6 +53,8 @@ RSpec.describe Himekaminize::TaskList do
       it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。", "あとで少し調べてみよう。", "今日のやること"] }
       it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(complete complete incomplete) }
+
+      it { expect(subject[:markdown]).to eq "- [x] 最近はElasticsearchなるものに興味がある。\n\r  - [x] あとで少し調べてみよう。\n\r  - [ ] 今日のやること\n\r" }
     end
   end
 end
