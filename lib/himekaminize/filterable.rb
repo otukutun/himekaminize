@@ -13,11 +13,11 @@ module Himekaminize
       @result ||= Hash.new
       context = default_context.merge(context)
 
-      result = filters.inject(context: context, output: lines) do |output, filter|
+      @result = filters.inject(context: context, output: lines) do |output, filter|
         filter.call(output)
       end
 
-      result
+      @result
     end
 
     def result

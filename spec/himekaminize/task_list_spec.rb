@@ -5,7 +5,7 @@ RSpec.describe Himekaminize::TaskList do
 
   describe "#call" do
     subject do
-      task_list.call(markdown)
+      task_list.call(markdown, context)
     end
 
     let(:default_context) { {} }
@@ -28,8 +28,20 @@ RSpec.describe Himekaminize::TaskList do
 
     context "non task list text" do
       let(:markdown) { "# 最近はElasticsearchなるものに興味がある。\n## あとで少し調べてみよう。\n## 今日のやること" }
+      let(:context) { {} }
 
       it { expect(subject[:output]).to eq ["# 最近はElasticsearchなるものに興味がある。\n", "## あとで少し調べてみよう。\n", "## 今日のやること"] }
+    end
+
+    context "only task list" do
+      let(:markdown) { "- [ ] 最近はElasticsearchなるものに興味がある。\n  - [ ] あとで少し調べてみよう。\n  - [x] 今日のやること\n\r今日はなにをやろうかな\n今日はなにをやろうかな\n今日はなにをやろうかな\n" }
+      let(:context) { { only_task_list: true } }
+
+      it { expect(subject[:context][:only_task_list]).to eq true }
+
+      it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。", "あとで少し調べてみよう。", "今日のやること"] }
+      it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
+      it { expect(subject[:output].map(&:status)).to eq %i(incomplete incomplete complete) }
     end
   end
 end
