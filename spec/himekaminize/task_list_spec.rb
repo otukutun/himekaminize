@@ -54,7 +54,7 @@ RSpec.describe Himekaminize::TaskList do
       it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(complete complete incomplete) }
 
-      it { expect(subject[:markdown]).to eq "- [x] 最近はElasticsearchなるものに興味がある。\n\r  - [x] あとで少し調べてみよう。\n\r  - [ ] 今日のやること\n\r" }
+      it { expect(subject[:markdown]).to eq "- [x] 最近はElasticsearchなるものに興味がある。  - [x] あとで少し調べてみよう。  - [ ] 今日のやること" }
     end
   end
 end
