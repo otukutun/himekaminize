@@ -33,7 +33,7 @@ RSpec.describe Himekaminize::TaskList do
       it { expect(subject[:output]).to eq ["# 最近はElasticsearchなるものに興味がある。\n", "## あとで少し調べてみよう。\n", "## 今日のやること"] }
     end
 
-    context "only task list" do
+    context "only task list option is true" do
       let(:markdown) { "- [ ] 最近はElasticsearchなるものに興味がある。\n  - [ ] あとで少し調べてみよう。\n  - [x] 今日のやること\n\r今日はなにをやろうかな\n今日はなにをやろうかな\n今日はなにをやろうかな\n" }
       let(:context) { { only_task_list: true } }
 
@@ -42,6 +42,17 @@ RSpec.describe Himekaminize::TaskList do
       it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。", "あとで少し調べてみよう。", "今日のやること"] }
       it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(incomplete incomplete complete) }
+    end
+
+    context "update task list" do
+      let(:markdown) { "- [ ] 最近はElasticsearchなるものに興味がある。\n  - [ ] あとで少し調べてみよう。\n  - [x] 今日のやること\n\r今日はなにをやろうかな\n今日はなにをやろうかな\n今日はなにをやろうかな\n" }
+      let(:context) { { only_task_list: true, update_task_status_list: [{sequence: 1, status: :complete}, {sequence: 2, status: :complete}, {sequence: 3, status: :incomplete}] } }
+
+      it { expect(subject[:context][:update_task_status_list]).to eq [{sequence: 1, status: :complete}, {sequence: 2, status: :complete}, {sequence: 3, status: :incomplete}] }
+
+      it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。", "あとで少し調べてみよう。", "今日のやること"] }
+      it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
+      it { expect(subject[:output].map(&:status)).to eq %i(complete complete incomplete) }
     end
   end
 end
