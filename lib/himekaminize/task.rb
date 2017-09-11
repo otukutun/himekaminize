@@ -18,7 +18,7 @@ module Himekaminize
 
     def to_s
       status_str = @status == COMPLETE_STATUSE ? COMPLETE_MD : INCOMPLETE_MD
-      sprintf("%s%s %s", @space, status_str, @name)
+      sprintf("%s%s %s\n", @space, status_str, @name)
     end
 
     def update_status(status)
