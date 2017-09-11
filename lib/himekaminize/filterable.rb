@@ -48,7 +48,7 @@ module Himekaminize
     end
 
     def to_lines
-      @lines = markdown.lines
+      @lines = markdown.lines("\r\n")
     end
 
     def to_s
