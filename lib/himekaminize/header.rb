@@ -2,10 +2,11 @@ module Himekaminize
   class Header
 
     PATTERN = /\#{1,6}/
-    attr_accessor :space, :name, :level
+    attr_accessor :space, :name, :level, :size
 
     def initialize(line)
       @space, @level, @name = split_name_and_level(line)
+      @size = count_size
     end
 
     def to_s
@@ -18,6 +19,10 @@ module Himekaminize
       /\A(\s*)(#{PATTERN})(.*)/.match(line) do |m|
         [m[1], m[2], m[3]]
       end
+    end
+
+    def count_size
+      @level.length
     end
   end
 end
