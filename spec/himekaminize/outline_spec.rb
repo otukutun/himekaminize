@@ -26,14 +26,13 @@ RSpec.describe Himekaminize::Outline do
     end
 
     context "only task list option is true" do
-      let(:markdown) { "- [ ] 最近はElasticsearchなるものに興味がある。\r\n  - [ ] あとで少し調べてみよう。\r\n  - [x] 今日のやること\r\n今日はなにをやろうかな\r\n今日はなにをやろうかな\r\n今日はなにをやろうかな\n" }
-      let(:context) { { only_task_list: true } }
+      let(:markdown) { "# 最近はElasticsearchなるものに興味がある。\r\n## あとで少し調べてみよう。\r\n## 今日のやること\r\n今日はなにをやろうかな\r\n今日はなにをやろうかな\r\n### 今日はなにをやろうかな\n" }
+      let(:context) { { only_header: true } }
 
-      it { expect(subject[:context][:only_task_list]).to eq true }
+      it { expect(subject[:context][:only_header]).to eq true }
 
-      #it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。\r", "あとで少し調べてみよう。\r", "今日のやること\r"] }
-      #it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
-      #it { expect(subject[:output].map(&:status)).to eq %i(incomplete incomplete complete) }
+      it { expect(subject[:output].map(&:name)).to eq [" 最近はElasticsearchなるものに興味がある。\r", " あとで少し調べてみよう。\r", " 今日のやること\r", " 今日はなにをやろうかな"] }
+      it { expect(subject[:output].map(&:size)).to eq [1, 2, 2, 3] }
     end
   end
 end
