@@ -6,23 +6,23 @@ module Himekaminize
         seq = 0
         @context = context
         output = output.map do |line|
-          if line.is_a?(String) && line =~ /\A\s*(#{Himekaminize::Task::INCOMPLETE_PATTERN}|#{Himekaminize::Task::COMPLETE_PATTERN})/
+          if line.is_a?(String) && line =~ /\A\s*(#{Himekaminize::Nodes::Task::INCOMPLETE_PATTERN}|#{Himekaminize::Nodes::Task::COMPLETE_PATTERN})/
             seq += 1
-            Himekaminize::Task.new(line, seq)
+            Himekaminize::Nodes::Task.new(line, seq)
           else
             line
           end
         end
 
         if only_task_list?
-          output = output.select { |line| line.is_a?(Himekaminize::Task) }
+          output = output.select { |line| line.is_a?(Himekaminize::Nodes::Task) }
         end
 
         if update_task_status_list.present?
           seq = 1
           update_task_status_list.each do |v|
             output = output.map do |line|
-              if line.is_a?(Himekaminize::Task) && line.sequence == v[:sequence]
+              if line.is_a?(Himekaminize::Nodes::Task) && line.sequence == v[:sequence]
                 line.update_status(v[:status].to_sym)
                 line
               else

@@ -6,20 +6,20 @@ module Himekaminize
       def call(context:, output:)
         @context = context
         output = output.map do |line|
-          if line.is_a?(String) && line =~ /\A\s*(#{Himekaminize::Header::PATTERN})/
-            Himekaminize::Header.new(line)
+          if line.is_a?(String) && line =~ /\A\s*(#{Himekaminize::Nodes::Header::PATTERN})/
+            Himekaminize::Nodes::Header.new(line)
           else
             line
           end
         end
 
         if only_header?
-          output = output.select { |line| line.is_a?(Himekaminize::Header) }
+          output = output.select { |line| line.is_a?(Himekaminize::Nodes::Header) }
         end
 
         if header_size.present?
           output = output.select { |line|
-          (line.is_a?(Himekaminize::Header) && header_size >= line.size) || !line.is_a?(Himekaminize::Header)
+          (line.is_a?(Himekaminize::Nodes::Header) && header_size >= line.size) || !line.is_a?(Himekaminize::Nodes::Header)
           }
         end
 
