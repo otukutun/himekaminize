@@ -1,6 +1,6 @@
 module Himekaminize
   module Nodes
-    class Task
+    class Task < BaseNode
       INCOMPLETE_PATTERN = /[-+*]\s\[\s\]\s/
       COMPLETE_PATTERN = /[-+*]\s\[[xX]\]\s/
 

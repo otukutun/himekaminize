@@ -1,6 +1,6 @@
 module Himekaminize
   module Nodes
-    class Header
+    class Header < BaseNode
 
       PATTERN = /\#{1,6}/
       attr_accessor :space, :name, :level, :size

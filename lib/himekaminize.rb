@@ -1,4 +1,5 @@
 require "himekaminize/filterable"
+require "himekaminize/nodes/base_node"
 require "himekaminize/nodes/task"
 require "himekaminize/nodes/header"
 require "himekaminize/filters/base_filter"
