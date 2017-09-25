@@ -14,6 +14,23 @@ module Himekaminize
           end
         end
 
+        # attach depth, and parent_seq
+        output.map.with_index do |line, index|
+          next line unless line.is_a?(Himekaminize::Nodes::Task)
+          next line if line.depth == 0
+          next line if index == 0
+          next line if line.sequence == 1
+          prev_i = index - 1
+          prev_i.downto(0) do |pi|
+            next line unless output[pi].is_a?(Himekaminize::Nodes::Task)
+            if line.space.length - 4 <= output[pi].space.length && line.space.length - 1
+              line.depth = output[pi].depth + 1
+              line.parent_seq = output[pi].sequence
+              next line
+            end
+          end
+        end
+
         if only_task_list?
           output = output.select { |line| line.is_a?(Himekaminize::Nodes::Task) }
         end
@@ -48,6 +65,7 @@ module Himekaminize
       def update_task_status_list
         @context[:update_task_status_list].presence || {}
       end
+
     end
   end
 end

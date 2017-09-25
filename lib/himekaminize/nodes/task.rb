@@ -6,7 +6,7 @@ module Himekaminize
 
       INCOMPLETE_MD = '- [ ]'.freeze
       COMPLETE_MD = '- [x]'.freeze
-      attr_accessor :name, :status, :sequence
+      attr_accessor :name, :status, :sequence, :space, :depth, :parent_seq
 
       COMPLETE_STATUSE = :complete
       INCOMPLETE_STATUSE = :incomplete
@@ -15,6 +15,7 @@ module Himekaminize
       def initialize(line, sequence)
         @sequence = sequence
         @status, @name, @space = split_name_and_status(line)
+        @depth, @parent_seq = 0, nil if @space.length == 0 
       end
 
       def to_s
