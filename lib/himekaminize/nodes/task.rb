@@ -30,6 +30,15 @@ module Himekaminize
         @status = status
       end
 
+      def parent?(a)
+        return false unless a.is_a?(self.class)
+        @space.length - 4 <= a.space.length && a.space.length <= @space.length - 1
+      end
+
+      def none_parent?
+        @depth == 0 || @seq == 1
+      end
+
       private
       def split_name_and_status(line)
         /\A(\s*)(#{INCOMPLETE_PATTERN}|#{COMPLETE_PATTERN})(.*)/.match(line) do |m|

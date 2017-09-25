@@ -24,6 +24,8 @@ RSpec.describe Himekaminize::TaskList do
       it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。\r", "あとで少し調べてみよう。\r", "今日のやること"] }
       it { expect(subject[:output].map(&:seq)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(incomplete incomplete complete) }
+      it { expect(subject[:output].map(&:depth)).to eq [0, 1, 1] }
+      it { expect(subject[:output].map(&:parent_seq)).to eq [nil, 1, 1] }
     end
 
     context "non task list text" do
@@ -42,6 +44,8 @@ RSpec.describe Himekaminize::TaskList do
       it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。\r", "あとで少し調べてみよう。\r", "今日のやること\r"] }
       it { expect(subject[:output].map(&:seq)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(incomplete incomplete complete) }
+      it { expect(subject[:output].map(&:depth)).to eq [0, 1, 1] }
+      it { expect(subject[:output].map(&:parent_seq)).to eq [nil, 1, 1] }
     end
 
     context "update task list" do
@@ -53,6 +57,8 @@ RSpec.describe Himekaminize::TaskList do
       it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。\r", "あとで少し調べてみよう。\r", "今日のやること\r"] }
       it { expect(subject[:output].map(&:seq)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(complete complete incomplete) }
+      it { expect(subject[:output].map(&:depth)).to eq [0, 1, 1] }
+      it { expect(subject[:output].map(&:parent_seq)).to eq [nil, 1, 1] }
 
       it { expect(subject[:markdown]).to eq "- [x] 最近はElasticsearchなるものに興味がある。\r\n  - [x] あとで少し調べてみよう。\r\n  - [ ] 今日のやること\r\n" }
     end

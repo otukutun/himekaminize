@@ -14,21 +14,11 @@ module Himekaminize
           end
         end
 
-        # attach depth, and parent_seq
+        # Attach depth, and parent_seq
         output.map.with_index do |line, index|
-          next line unless line.is_a?(Himekaminize::Nodes::Task)
-          next line if line.depth == 0
-          next line if index == 0
-          next line if line.seq == 1
+          next line if !line.is_a?(Himekaminize::Nodes::Task) || index == 0 || line.none_parent?
           prev_i = index - 1
-          prev_i.downto(0) do |pi|
-            next line unless output[pi].is_a?(Himekaminize::Nodes::Task)
-            if line.space.length - 4 <= output[pi].space.length && line.space.length - 1
-              line.depth = output[pi].depth + 1
-              line.parent_seq = output[pi].seq
-              next line
-            end
-          end
+          next attach_parent_task(output, line, prev_i)
         end
 
         if only_task_list?
@@ -66,6 +56,17 @@ module Himekaminize
         @context[:update_task_status_list].presence || {}
       end
 
+      def attach_parent_task(output, task, prev_i)
+        prev_i.downto(0) do |pi|
+          return task unless output[pi].is_a?(Himekaminize::Nodes::Task)
+          if task.parent?(output[pi])
+            task.depth = output[pi].depth + 1
+            task.parent_seq = output[pi].seq
+            return task
+          end
+        end
+        task
+      end
     end
   end
 end
