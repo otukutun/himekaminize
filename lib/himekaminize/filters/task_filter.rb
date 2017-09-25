@@ -58,11 +58,16 @@ module Himekaminize
 
       def attach_parent_task(output, task, prev_i)
         prev_i.downto(0) do |pi|
-          return task unless output[pi].is_a?(Himekaminize::Nodes::Task)
+          unless output[pi].is_a?(Himekaminize::Nodes::Task)
+            task.depth ||= 0
+            return task
+          end
           if task.parent?(output[pi])
             task.depth = output[pi].depth + 1
             task.parent_seq = output[pi].seq
             return task
+          else
+            task.depth ||= 0
           end
         end
         task
