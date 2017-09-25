@@ -1,3 +1,4 @@
+require "active_support/core_ext/module"
 module Himekaminize
   module Nodes
     class Task < BaseNode
@@ -6,16 +7,17 @@ module Himekaminize
 
       INCOMPLETE_MD = '- [ ]'.freeze
       COMPLETE_MD = '- [x]'.freeze
-      attr_accessor :name, :status, :sequence, :space, :depth, :parent_seq
+      attr_accessor :name, :status, :seq, :space, :depth, :parent_seq
+      alias_attribute :sequence, :seq
 
       COMPLETE_STATUSE = :complete
       INCOMPLETE_STATUSE = :incomplete
       STATUSES = %I(#{COMPLETE_STATUSE} #{INCOMPLETE_STATUSE})
 
-      def initialize(line, sequence)
-        @sequence = sequence
+      def initialize(line, seq)
+        @seq = seq
         @status, @name, @space = split_name_and_status(line)
-        @depth, @parent_seq = 0, nil if @space.length == 0 
+        @depth, @parent_seq = 0, nil if @space.length == 0
       end
 
       def to_s

@@ -19,13 +19,13 @@ module Himekaminize
           next line unless line.is_a?(Himekaminize::Nodes::Task)
           next line if line.depth == 0
           next line if index == 0
-          next line if line.sequence == 1
+          next line if line.seq == 1
           prev_i = index - 1
           prev_i.downto(0) do |pi|
             next line unless output[pi].is_a?(Himekaminize::Nodes::Task)
             if line.space.length - 4 <= output[pi].space.length && line.space.length - 1
               line.depth = output[pi].depth + 1
-              line.parent_seq = output[pi].sequence
+              line.parent_seq = output[pi].seq
               next line
             end
           end
@@ -39,7 +39,7 @@ module Himekaminize
           seq = 1
           update_task_status_list.each do |v|
             output = output.map do |line|
-              if line.is_a?(Himekaminize::Nodes::Task) && line.sequence == v[:sequence]
+              if line.is_a?(Himekaminize::Nodes::Task) && line.seq == v[:seq]
                 line.update_status(v[:status].to_sym)
                 line
               else

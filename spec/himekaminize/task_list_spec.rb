@@ -22,7 +22,7 @@ RSpec.describe Himekaminize::TaskList do
       let(:context) { {} }
 
       it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。\r", "あとで少し調べてみよう。\r", "今日のやること"] }
-      it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
+      it { expect(subject[:output].map(&:seq)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(incomplete incomplete complete) }
     end
 
@@ -40,18 +40,18 @@ RSpec.describe Himekaminize::TaskList do
       it { expect(subject[:context][:only_task_list]).to eq true }
 
       it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。\r", "あとで少し調べてみよう。\r", "今日のやること\r"] }
-      it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
+      it { expect(subject[:output].map(&:seq)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(incomplete incomplete complete) }
     end
 
     context "update task list" do
       let(:markdown) { "- [ ] 最近はElasticsearchなるものに興味がある。\r\n  - [ ] あとで少し調べてみよう。\r\n  - [x] 今日のやること\r\n今日はなにをやろうかな\r\n今日はなにをやろうかな\r\n今日はなにをやろうかな\n" }
-      let(:context) { { only_task_list: true, update_task_status_list: [{sequence: 1, status: :complete}, {sequence: 2, status: :complete}, {sequence: 3, status: :incomplete}] } }
+      let(:context) { { only_task_list: true, update_task_status_list: [{seq: 1, status: :complete}, {seq: 2, status: :complete}, {seq: 3, status: :incomplete}] } }
 
-      it { expect(subject[:context][:update_task_status_list]).to eq [{sequence: 1, status: :complete}, {sequence: 2, status: :complete}, {sequence: 3, status: :incomplete}] }
+      it { expect(subject[:context][:update_task_status_list]).to eq [{seq: 1, status: :complete}, {seq: 2, status: :complete}, {seq: 3, status: :incomplete}] }
 
       it { expect(subject[:output].map(&:name)).to eq ["最近はElasticsearchなるものに興味がある。\r", "あとで少し調べてみよう。\r", "今日のやること\r"] }
-      it { expect(subject[:output].map(&:sequence)).to eq [1, 2, 3] }
+      it { expect(subject[:output].map(&:seq)).to eq [1, 2, 3] }
       it { expect(subject[:output].map(&:status)).to eq %i(complete complete incomplete) }
 
       it { expect(subject[:markdown]).to eq "- [x] 最近はElasticsearchなるものに興味がある。\r\n  - [x] あとで少し調べてみよう。\r\n  - [ ] 今日のやること\r\n" }
